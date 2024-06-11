@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:meal/models/meal.dart';
+import 'package:meal/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class mealitem extends StatelessWidget {
   const mealitem({super.key, required this.meal});
   final Meal meal;
+
+  String get textcomplexity {
+    return meal.complexity.name[0].toUpperCase() +
+        meal.complexity.name.substring(1);
+  }
+  String get textprice {
+    return meal.affordability.name[0].toUpperCase() +
+        meal.affordability.name.substring(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +31,7 @@ class mealitem extends StatelessWidget {
           children: [
             FadeInImage(
               fit: BoxFit.cover,
-             width: double.infinity,
+              width: double.infinity,
               height: 200,
               placeholder: MemoryImage(
                 kTransparentImage,
@@ -39,6 +49,7 @@ class mealitem extends StatelessWidget {
                     horizontal: 44,
                   ),
                   child: Column(
+                    
                     children: [
                       Text(
                         meal.title,
@@ -56,7 +67,21 @@ class mealitem extends StatelessWidget {
                         height: 12,
                       ),
                       Row(
-                        children: [],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          MealItemTrait(
+                              icon: Icons.schedule,
+                              label: '${meal.duration} '),
+                          const SizedBox(width: 12),
+                          MealItemTrait(
+                              icon: Icons.work, label:  textcomplexity),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          MealItemTrait(
+                              icon: Icons.attach_money,
+                              label: textprice),
+                        ],
                       ),
                     ],
                   ),
