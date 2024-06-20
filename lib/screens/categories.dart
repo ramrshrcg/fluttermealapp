@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:meal/data/dummy_data.dart';
 import 'package:meal/models/category.dart';
+import 'package:meal/models/meal.dart';
 import 'package:meal/screens/meals.dart';
 import 'package:meal/widgets/categorygriditem.dart';
 
 class categoryScreen extends StatelessWidget {
-  const categoryScreen({super.key});
-
+  const categoryScreen({super.key, required this.onToogleFavourite});
+final void Function(Meal meal) onToogleFavourite;
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals
         .where(
@@ -18,21 +19,14 @@ class categoryScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) =>
-            Mealscreen(meals: filteredMeals, title: category.title),
+            Mealscreen(meals: filteredMeals, title: category.title, onToogleFavourite: onToogleFavourite,),
       ),
     ); //navigator.push(context, route);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Category",
-          style: TextStyle(color: Colors.amber),
-        ),
-      ),
-      body: GridView(
+    return GridView(
         padding: const EdgeInsets.all(24),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -48,7 +42,6 @@ class categoryScreen extends StatelessWidget {
               },
             ),
         ],
-      ),
-    );
+      );
   }
 }

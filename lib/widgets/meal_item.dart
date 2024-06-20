@@ -3,9 +3,11 @@ import 'package:meal/models/meal.dart';
 import 'package:meal/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+// ignore: camel_case_types
 class mealitem extends StatelessWidget {
-  const mealitem({super.key, required this.meal});
+  const mealitem({super.key, required this.meal, required this.onSelectMeal,});
   final Meal meal;
+  final void Function(BuildContext context,  Meal meal) onSelectMeal;
 
   String get textcomplexity {
     return meal.complexity.name[0].toUpperCase() +
@@ -19,14 +21,16 @@ class mealitem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
       ),
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap:(){
+          onSelectMeal(context,meal);
+        },
         child: Stack(
           children: [
             FadeInImage(
