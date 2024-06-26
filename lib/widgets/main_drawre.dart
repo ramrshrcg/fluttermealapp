@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ManiDrawer extends StatelessWidget {
-  const ManiDrawer({super.key});
+  const ManiDrawer({super.key, required this.onSelectscreen});
+  final  void Function (String identifire) onSelectscreen;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class ManiDrawer extends StatelessWidget {
                   .titleSmall!
                   .copyWith(color: Theme.of(context).colorScheme.primary,fontSize: 24),
             ),
-            onTap: () {},
+            onTap: () {onSelectscreen('meals');},
           ),
            ListTile(
             leading: Icon(
@@ -71,7 +72,7 @@ class ManiDrawer extends StatelessWidget {
                   .titleSmall!
                   .copyWith(color: Theme.of(context).colorScheme.primary,fontSize: 24),
             ),
-            onTap: () {},
+            onTap: () {onSelectscreen('filters');},
           ),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal/models/meal.dart';
 import 'package:meal/screens/categories.dart';
+import 'package:meal/screens/filters_screen.dart';
 import 'package:meal/screens/meals.dart';
 import 'package:meal/widgets/main_drawre.dart';
 
@@ -28,7 +29,7 @@ class _TabsScreenStates extends State<TabsScreen> {
       );
     }
 
-    if (isExisting==true) {
+    if (isExisting == true) {
       setState(() {
         _favouritemeals.remove(meal);
         Showmssage('favourites removed');
@@ -46,6 +47,19 @@ class _TabsScreenStates extends State<TabsScreen> {
     setState(() {
       selectpageindex = index;
     });
+  }
+
+  void _selectscreeen(String identifire) {
+    if (identifire == 'filters') {
+        Navigator.of(context).pop();
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const Filterscreen(),
+        ),
+      );
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -66,8 +80,9 @@ class _TabsScreenStates extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(activetitle),
       ),
-      drawer: const ManiDrawer(),
-      
+      drawer: ManiDrawer(
+        onSelectscreen: _selectscreeen,
+      ),
       body: activescreen,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
