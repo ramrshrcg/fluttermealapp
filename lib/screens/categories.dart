@@ -7,10 +7,16 @@ import 'package:meal/screens/meals.dart';
 import 'package:meal/widgets/categorygriditem.dart';
 
 class categoryScreen extends StatelessWidget {
-  const categoryScreen({super.key, required this.onToogleFavourite});
-final void Function(Meal meal) onToogleFavourite;
+  const categoryScreen({
+    super.key,
+    required this.onToogleFavourite,
+    required this.availableMeals,
+  });
+
+  final void Function(Meal meal) onToogleFavourite;
+  final List<Meal > availableMeals;
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = dummyMeals
+    final filteredMeals = availableMeals
         .where(
           (meal) => meal.categories.contains(category.id),
         )
@@ -18,8 +24,11 @@ final void Function(Meal meal) onToogleFavourite;
 
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) =>
-            Mealscreen(meals: filteredMeals, title: category.title, onToogleFavourite: onToogleFavourite,),
+        builder: (ctx) => Mealscreen(
+          meals: filteredMeals,
+          title: category.title,
+          onToogleFavourite: onToogleFavourite,
+        ),
       ),
     ); //navigator.push(context, route);
   }
@@ -27,21 +36,21 @@ final void Function(Meal meal) onToogleFavourite;
   @override
   Widget build(BuildContext context) {
     return GridView(
-        padding: const EdgeInsets.all(24),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1.5,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        children: [
-          for (final category in availableCategories)
-            Categorygriditem(
-              category: category,
-              onseleectCategory: () {
-                _selectCategory(context, category);
-              },
-            ),
-        ],
-      );
+      padding: const EdgeInsets.all(24),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1.5,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20),
+      children: [
+        for (final category in availableCategories)
+          Categorygriditem(
+            category: category,
+            onseleectCategory: () {
+              _selectCategory(context, category);
+            },
+          ),
+      ],
+    );
   }
 }
